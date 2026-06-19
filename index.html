@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RicordAI — Non dimenticare mai più una scadenza</title>
+<meta name="description" content="RicordAI ti avvisa prima che scadano assicurazione, bollette, documenti e abbonamenti. L'app che pensa alle scadenze, così tu non devi.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy: #0F1B33;
+    --navy-light: #1A2B4D;
+    --coral: #FF6B5B;
+    --coral-dark: #E6503F;
+    --cream: #F7F4EE;
+    --sage: #7FB39B;
+    --ink: #1A1A1A;
+    --paper: #FFFDF9;
+
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  img { max-width: 100%; display: block; }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 253, 249, 0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(15, 27, 51, 0.08);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 28px;
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .logo-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--coral);
+    display: inline-block;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--navy);
+  }
+
+  .nav-links a {
+    opacity: 0.75;
+    transition: opacity 0.2s;
+    position: relative;
+  }
+  .nav-links a:hover { opacity: 1; }
+
+  .nav-cta {
+    background: var(--navy);
+    color: var(--paper) !important;
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 1 !important;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .nav-cta:hover { background: var(--coral-dark); transform: translateY(-1px); }
+
+  .nav-mobile-toggle { display: none; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    padding: 100px 0 80px;
+    background: var(--navy);
+    color: var(--cream);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,107,91,0.18), transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sage);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 18px;
+    height: 1px;
+    background: var(--sage);
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 54px;
+    line-height: 1.06;
+    letter-spacing: -0.015em;
+    margin-bottom: 22px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--coral);
+    font-weight: 500;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(247, 244, 238, 0.75);
+    max-width: 460px;
+    margin-bottom: 36px;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn-store {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--cream);
+    color: var(--navy);
+    padding: 13px 22px;
+    border-radius: 12px;
+    font-size: 14.5px;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid transparent;
+  }
+
+  .btn-store:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }
+
+  .btn-store.outline {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(247,244,238,0.3);
+  }
+
+  .btn-store svg { flex-shrink: 0; }
+
+  .store-soon {
+    font-size: 12px;
+    opacity: 0.55;
+    margin-top: 14px;
+    font-family: var(--font-mono);
+  }
+
+  /* Phone mock */
+  .hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .phone {
+    width: 240px;
+    height: 490px;
+    background: linear-gradient(160deg, #1A2B4D, #0F1B33);
+    border-radius: 38px;
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 14px;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    position: relative;
+  }
+
+  .phone-screen {
+    background: var(--cream);
+    border-radius: 26px;
+    height: 100%;
+    padding: 22px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+  }
+
+  .phone-header {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .card-mini {
+    background: var(--paper);
+    border-radius: 14px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 8px rgba(15,27,51,0.06);
+  }
+
+  .card-mini.urgent { border-left: 3px solid var(--coral); }
+  .card-mini.ok { border-left: 3px solid var(--sage); }
+
+  .card-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .card-icon.bg-coral { background: rgba(255,107,91,0.15); }
+  .card-icon.bg-sage { background: rgba(127,179,155,0.18); }
+  .card-icon.bg-navy { background: rgba(15,27,51,0.08); }
+
+  .card-text { flex: 1; min-width: 0; }
+  .card-title-mini { font-size: 12.5px; font-weight: 600; color: var(--navy); }
+  .card-sub-mini { font-size: 11px; color: #8a8a8a; margin-top: 1px; }
+
+  .notch {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 18px;
+    background: #0F1B33;
+    border-radius: 0 0 12px 12px;
+  }
+
+  .float-badge {
+    position: absolute;
+    background: var(--coral);
+    color: white;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 100px;
+    box-shadow: 0 12px 24px rgba(255,107,91,0.35);
+  }
+  .float-badge.b1 { top: 60px; left: -10px; }
+  .float-badge.b2 { bottom: 90px; right: -16px; background: var(--sage); box-shadow: 0 12px 24px rgba(127,179,155,0.35); color: var(--navy); }
+
+  /* ---------- TRUST STRIP ---------- */
+  .trust-strip {
+    background: var(--cream);
+    padding: 22px 0;
+    border-bottom: 1px solid rgba(15,27,51,0.08);
+  }
+  .trust-inner {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--navy);
+    opacity: 0.7;
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- SECTIONS GENERAL ---------- */
+  section { padding: 100px 0; }
+
+  .section-head {
+    max-width: 600px;
+    margin-bottom: 64px;
+  }
+
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--coral-dark);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 38px;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    color: var(--navy);
+  }
+
+  .section-desc {
+    font-size: 16.5px;
+    color: #5a5a5a;
+    line-height: 1.65;
+    margin-top: 16px;
+  }
+
+  /* ---------- DRAWERS (categories) ---------- */
+  .drawers {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(15,27,51,0.12);
+  }
+
+  .drawer {
+    border-bottom: 1px solid rgba(15,27,51,0.12);
+    cursor: pointer;
+  }
+
+  .drawer-head {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 28px 4px;
+    transition: padding 0.2s;
+  }
+
+  .drawer-num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--coral-dark);
+    width: 28px;
+    flex-shrink: 0;
+  }
+
+  .drawer-icon {
+    font-size: 26px;
+    width: 44px;
+    flex-shrink: 0;
+  }
+
+  .drawer-title {
+    font-family: var(--font-display);
+    font-size: 23px;
+    font-weight: 600;
+    color: var(--navy);
+    flex: 1;
+  }
+
+  .drawer-tag {
+    font-size: 12.5px;
+    font-family: var(--font-mono);
+    color: var(--sage);
+    background: rgba(127,179,155,0.13);
+    padding: 5px 12px;
+    border-radius: 100px;
+    flex-shrink: 0;
+  }
+
+  .drawer-toggle {
+    font-size: 20px;
+    color: var(--navy);
+    opacity: 0.4;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+
+  .drawer.open .drawer-toggle { transform: rotate(45deg); }
+
+  .drawer-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+
+  .drawer.open .drawer-body { max-height: 200px; }
+
+  .drawer-body-inner {
+    padding: 0 4px 32px 76px;
+    font-size: 15.5px;
+    color: #5a5a5a;
+    line-height: 1.7;
+    max-width: 560px;
+  }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .step {
+    background: var(--cream);
+    border-radius: 20px;
+    padding: 36px 28px;
+    position: relative;
+  }
+
+  .step-num {
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 600;
+    color: rgba(15,27,51,0.12);
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+
+  .step h3 {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .step p {
+    font-size: 14.5px;
+    color: #5a5a5a;
+    line-height: 1.6;
+  }
+
+  /* ---------- PRICING ---------- */
+  .pricing-bg { background: var(--navy); color: var(--cream); }
+
+  .pricing-bg h2 { color: var(--cream); }
+  .pricing-bg .section-desc { color: rgba(247,244,238,0.65); }
+
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .price-card {
+    background: rgba(247,244,238,0.04);
+    border: 1px solid rgba(247,244,238,0.12);
+    border-radius: 20px;
+    padding: 36px 32px;
+  }
+
+  .price-card.featured {
+    background: linear-gradient(160deg, rgba(255,107,91,0.12), rgba(255,107,91,0.03));
+    border: 1px solid rgba(255,107,91,0.4);
+    position: relative;
+  }
+
+  .price-card.featured::before {
+    content: "Più scelto";
+    position: absolute;
+    top: -12px;
+    right: 28px;
+    background: var(--coral);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-family: var(--font-mono);
+  }
+
+  .price-name {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--sage);
+    margin-bottom: 14px;
+  }
+
+  .price-amount {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .price-amount span {
+    font-size: 16px;
+    font-weight: 400;
+    opacity: 0.5;
+  }
+
+  .price-note {
+    font-size: 13px;
+    opacity: 0.55;
+    margin-bottom: 24px;
+  }
+
+  .price-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 14.5px;
+  }
+
+  .price-features li {
+    display: flex;
+    gap: 10px;
+    opacity: 0.85;
+  }
+
+  .price-features li::before {
+    content: "✓";
+    color: var(--sage);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ---------- LANGUAGES ---------- */
+  .lang-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .lang-pill {
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    background: var(--cream);
+    border: 1px solid rgba(15,27,51,0.1);
+    padding: 9px 16px;
+    border-radius: 100px;
+    color: var(--navy);
+  }
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta {
+    text-align: center;
+    padding: 120px 0;
+  }
+
+  .final-cta h2 {
+    font-size: 44px;
+    max-width: 640px;
+    margin: 0 auto 20px;
+  }
+
+  .final-cta .section-desc {
+    margin: 0 auto 40px;
+    text-align: center;
+  }
+
+  .cta-row.center { justify-content: center; }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: var(--navy);
+    color: rgba(247,244,238,0.6);
+    padding: 56px 0 32px;
+    font-size: 14px;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+
+  .footer-logo {
+    font-family: var(--font-display);
+    color: var(--cream);
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .footer-cols {
+    display: flex;
+    gap: 56px;
+    flex-wrap: wrap;
+  }
+
+  .footer-col-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--sage);
+    margin-bottom: 14px;
+  }
+
+  .footer-col a {
+    display: block;
+    margin-bottom: 10px;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+  .footer-col a:hover { opacity: 1; }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(247,244,238,0.1);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+    opacity: 0.55;
+  }
+
+  /* ---------- AI DEMO SECTION ---------- */
+  .ai-demo {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 28px;
+    align-items: center;
+    margin-bottom: 64px;
+  }
+
+  .ai-doc-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #8a8a8a;
+    margin-bottom: 12px;
+  }
+
+  .ai-doc-card {
+    position: relative;
+    background: var(--paper);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 32px -8px rgba(15,27,51,0.14);
+    border: 1px solid rgba(15,27,51,0.08);
+  }
+
+  .ai-doc-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(15,27,51,0.08);
+  }
+
+  .ai-doc-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(15,27,51,0.15);
+  }
+
+  .ai-doc-filename {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: #8a8a8a;
+    margin-left: 8px;
+  }
+
+  .ai-doc-body {
+    padding: 22px 20px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ai-doc-line {
+    height: 9px;
+    border-radius: 4px;
+    background: rgba(15,27,51,0.09);
+  }
+
+  .ai-doc-line.w-70 { width: 70%; }
+  .ai-doc-line.w-90 { width: 90%; }
+  .ai-doc-line.w-40 { width: 40%; }
+  .ai-doc-line.w-80 { width: 80%; }
+  .ai-doc-line.w-60 { width: 60%; }
+  .ai-doc-line.w-95 { width: 95%; }
+  .ai-doc-line.w-50 { width: 50%; }
+
+  .ai-doc-line.highlight {
+    height: auto;
+    background: rgba(255,107,91,0.14);
+    border: 1px solid rgba(255,107,91,0.45);
+    color: var(--coral-dark);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+  }
+
+  .ai-scan-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--coral), transparent);
+    box-shadow: 0 0 16px 2px rgba(255,107,91,0.6);
+    animation: scan 3.2s ease-in-out infinite;
+  }
+
+  @keyframes scan {
+    0%   { top: 8%; opacity: 0; }
+    8%   { opacity: 1; }
+    50%  { top: 92%; opacity: 1; }
+    58%  { opacity: 0; }
+    100% { top: 8%; opacity: 0; }
+  }
+
+  .ai-arrow {
+    color: var(--coral-dark);
+    display: flex;
+    justify-content: center;
+  }
+
+  .ai-result-card {
+    background: var(--navy);
+    border-radius: 16px;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ai-result-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .ai-result-icon {
+    font-size: 20px;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(247,244,238,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .ai-result-key {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--sage);
+    margin-bottom: 2px;
+  }
+
+  .ai-result-val {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--cream);
+  }
+
+  .ai-result-done {
+    margin-top: 4px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(247,244,238,0.12);
+    font-size: 13px;
+    color: var(--sage);
+    font-weight: 500;
+  }
+
+  .ai-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    padding-bottom: 100px;
+  }
+
+  .ai-feature-icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+  }
+
+  .ai-feature h3 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .ai-feature p {
+    font-size: 14px;
+    color: #5a5a5a;
+    line-height: 1.6;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px) {
+    .nav-links { display: none; }
+    h1 { font-size: 38px; }
+    .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+    .hero-visual { order: -1; }
+    .phone { width: 200px; height: 410px; }
+    .steps { grid-template-columns: 1fr; }
+    .price-grid { grid-template-columns: 1fr; }
+    h2 { font-size: 30px; }
+    .final-cta h2 { font-size: 32px; }
+    .drawer-title { font-size: 18px; }
+    .drawer-body-inner { padding-left: 0; }
+    .drawer-icon { width: 32px; }
+    section { padding: 64px 0; }
+    .footer-inner { flex-direction: column; }
+    .ai-demo { grid-template-columns: 1fr; }
+    .ai-arrow { transform: rotate(90deg); padding: 4px 0; }
+    .ai-features { grid-template-columns: 1fr; padding-bottom: 64px; gap: 32px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--coral);
+    outline-offset: 3px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#top" class="logo"><span class="logo-dot"></span>RicordAI</a>
+    <div class="nav-links">
+      <a href="#ai">Come legge l'AI</a>
+      <a href="#categorie">Cosa ricorda</a>
+      <a href="#come-funziona">Come funziona</a>
+      <a href="#prezzi">Prezzi</a>
+      <a href="#download" class="nav-cta">Scarica l'app</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-inner">
+    <div>
+      <div class="eyebrow">Lettura automatica con AI</div>
+      <h1>Le scadenze non&nbsp;ti avvisano.<br><em>RicordAI</em>&nbsp;sì.</h1>
+      <p class="hero-sub">Fotografa una polizza, una bolletta o un documento: l'AI legge la data di scadenza da sola e la inserisce al posto tuo. Zero digitazione, su 9 lingue.</p>
+      <div class="cta-row">
+        <a href="#download" class="btn-store">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.61.72 3.34 1.8-3.03 1.86-2.31 5.92.49 7.17-.7 1.74-1.34 2.83-2.48 4.04zM12.03 7.25c-.14-2.18 1.66-3.99 3.7-4.25.27 2.34-2.21 4.43-3.7 4.25z"/></svg>
+          App Store
+        </a>
+        <a href="#download" class="btn-store outline">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3.6 2.18c-.35.2-.6.59-.6 1.02v17.6c0 .43.25.82.6 1.02l10.85-9.82L3.6 2.18zm12.15 9.82l2.5-2.27 3.6 2.06c.5.28.5 1 0 1.28l-3.6 2.06-2.5-2.27v-.86zm-1.3 1.18l-9.7 8.78 9.84-5.6 1.65-1.5-1.79-1.68zm0-2.36l1.79-1.68-1.65-1.5-9.84-5.6 9.7 8.78z"/></svg>
+          Google Play
+        </a>
+      </div>
+      <div class="store-soon">In pubblicazione — disponibile a breve su entrambi gli store</div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="phone-screen">
+          <div class="phone-header">Le tue scadenze</div>
+          <div class="card-mini urgent">
+            <div class="card-icon bg-coral">🚗</div>
+            <div class="card-text">
+              <div class="card-title-mini">Assicurazione auto</div>
+              <div class="card-sub-mini">Scade in 12 giorni</div>
+            </div>
+          </div>
+          <div class="card-mini">
+            <div class="card-icon bg-navy">🏠</div>
+            <div class="card-text">
+              <div class="card-title-mini">Bolletta luce</div>
+              <div class="card-sub-mini">Scade in 28 giorni</div>
+            </div>
+          </div>
+          <div class="card-mini ok">
+            <div class="card-icon bg-sage">🪪</div>
+            <div class="card-text">
+              <div class="card-title-mini">Carta d'identità</div>
+              <div class="card-sub-mini">Valida ancora 8 mesi</div>
+            </div>
+          </div>
+          <div class="card-mini">
+            <div class="card-icon bg-navy">💼</div>
+            <div class="card-text">
+              <div class="card-title-mini">Revisione auto</div>
+              <div class="card-sub-mini">Scade in 41 giorni</div>
+            </div>
+          </div>
+        </div>
+        <div class="float-badge b1">+30gg avviso</div>
+        <div class="float-badge b2">✓ tutto sotto controllo</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="trust-strip">
+  <div class="wrap trust-inner">
+    <span>9 lingue supportate</span>
+    <span>·</span>
+    <span>Notifiche prima della scadenza</span>
+    <span>·</span>
+    <span>iOS &amp; Android</span>
+    <span>·</span>
+    <span>Lettura automatica documenti</span>
+  </div>
+</div>
+
+<section id="ai" style="background:var(--cream); padding-bottom:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-eyebrow">Il cuore di RicordAI</span>
+      <h2>Non la inserisci tu. La legge l'AI.</h2>
+      <p class="section-desc">Niente moduli da compilare, niente date da ricopiare a mano. Fai una foto o carica un file: in pochi secondi RicordAI capisce di cosa si tratta e sa già quando avvisarti.</p>
+    </div>
+
+    <div class="ai-demo">
+      <div class="ai-doc">
+        <div class="ai-doc-label">Documento caricato</div>
+        <div class="ai-doc-card">
+          <div class="ai-doc-header">
+            <span class="ai-doc-dot"></span>
+            <span class="ai-doc-dot"></span>
+            <span class="ai-doc-dot"></span>
+            <span class="ai-doc-filename">polizza_auto_2026.pdf</span>
+          </div>
+          <div class="ai-doc-body">
+            <div class="ai-doc-line w-70"></div>
+            <div class="ai-doc-line w-90"></div>
+            <div class="ai-doc-line w-40"></div>
+            <div class="ai-doc-line w-80 highlight">Scadenza polizza: 14/09/2026</div>
+            <div class="ai-doc-line w-60"></div>
+            <div class="ai-doc-line w-95"></div>
+            <div class="ai-doc-line w-50"></div>
+          </div>
+          <div class="ai-scan-bar"></div>
+        </div>
+      </div>
+
+      <div class="ai-arrow">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </div>
+
+      <div class="ai-result">
+        <div class="ai-doc-label">Estratto automaticamente</div>
+        <div class="ai-result-card">
+          <div class="ai-result-row">
+            <span class="ai-result-icon">🚗</span>
+            <div>
+              <div class="ai-result-key">Categoria</div>
+              <div class="ai-result-val">Macchina — Assicurazione</div>
+            </div>
+          </div>
+          <div class="ai-result-row">
+            <span class="ai-result-icon">📅</span>
+            <div>
+              <div class="ai-result-key">Data di scadenza</div>
+              <div class="ai-result-val">14 settembre 2026</div>
+            </div>
+          </div>
+          <div class="ai-result-row">
+            <span class="ai-result-icon">🔔</span>
+            <div>
+              <div class="ai-result-key">Promemoria impostato</div>
+              <div class="ai-result-val">30 giorni prima — automatico</div>
+            </div>
+          </div>
+          <div class="ai-result-done">✓ Salvata nel cassetto giusto, senza toccare nulla</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ai-features">
+      <div class="ai-feature">
+        <div class="ai-feature-icon">📷</div>
+        <h3>Fotocamera o file</h3>
+        <p>Scatta sul momento o carica un PDF già salvato: l'AI legge entrambi nello stesso modo.</p>
+      </div>
+      <div class="ai-feature">
+        <div class="ai-feature-icon">🧠</div>
+        <h3>Capisce il documento</h3>
+        <p>Riconosce se è una polizza, una bolletta o un documento d'identità, e trova la data che conta davvero — non solo la prima che trova.</p>
+      </div>
+      <div class="ai-feature">
+        <div class="ai-feature-icon">📂</div>
+        <h3>Va nel cassetto giusto</h3>
+        <p>Categorizza da sola la scadenza e imposta il promemoria con il margine di tempo corretto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="categorie">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-eyebrow">Cosa ricorda per te</span>
+      <h2>Cinque cassetti, una sola app</h2>
+      <p class="section-desc">RicordAI organizza la tua vita in categorie chiare. Apri il cassetto giusto e trovi solo quello che ti serve sapere, quando ti serve saperlo.</p>
+    </div>
+
+    <div class="drawers">
+      <div class="drawer open">
+        <div class="drawer-head">
+          <span class="drawer-num">01</span>
+          <span class="drawer-icon">🚗</span>
+          <span class="drawer-title">Macchina</span>
+          <span class="drawer-tag">gratis</span>
+          <span class="drawer-toggle">+</span>
+        </div>
+        <div class="drawer-body">
+          <div class="drawer-body-inner">Assicurazione, bollo, revisione, tagliando. RicordAI legge la tua polizza e calcola da solo quando avvisarti, senza che tu debba inserire nulla a mano.</div>
+        </div>
+      </div>
+
+      <div class="drawer">
+        <div class="drawer-head">
+          <span class="drawer-num">02</span>
+          <span class="drawer-icon">🏠</span>
+          <span class="drawer-title">Casa</span>
+          <span class="drawer-tag">gratis</span>
+          <span class="drawer-toggle">+</span>
+        </div>
+        <div class="drawer-body">
+          <div class="drawer-body-inner">Bollette luce, gas, internet, affitto o mutuo. Una notifica prima della scadenza, così non paghi mai un giorno di ritardo.</div>
+        </div>
+      </div>
+
+      <div class="drawer">
+        <div class="drawer-head">
+          <span class="drawer-num">03</span>
+          <span class="drawer-icon">❤️</span>
+          <span class="drawer-title">Salute</span>
+          <span class="drawer-tag">gratis</span>
+          <span class="drawer-toggle">+</span>
+        </div>
+        <div class="drawer-body">
+          <div class="drawer-body-inner">Visite, esami di controllo, scadenze di tessere sanitarie. Anche la salute ha le sue scadenze: RicordAI te le tiene a mente.</div>
+        </div>
+      </div>
+
+      <div class="drawer">
+        <div class="drawer-head">
+          <span class="drawer-num">04</span>
+          <span class="drawer-icon">💼</span>
+          <span class="drawer-title">Lavoro</span>
+          <span class="drawer-tag">gratis</span>
+          <span class="drawer-toggle">+</span>
+        </div>
+        <div class="drawer-body">
+          <div class="drawer-body-inner">Contratti, certificazioni, corsi da rinnovare. Le scadenze professionali finiscono facilmente nel dimenticatoio: qui restano in vista.</div>
+        </div>
+      </div>
+
+      <div class="drawer">
+        <div class="drawer-head">
+          <span class="drawer-num">05</span>
+          <span class="drawer-icon">🪪</span>
+          <span class="drawer-title">Carte &amp; Documenti</span>
+          <span class="drawer-tag">gratis</span>
+          <span class="drawer-toggle">+</span>
+        </div>
+        <div class="drawer-body">
+          <div class="drawer-body-inner">Carta d'identità, passaporto, patente. Fai una foto, RicordAI legge la data di scadenza e te lo ricorda mesi prima.</div>
+        </div>
+      </div>
+
+      <div class="drawer">
+        <div class="drawer-head">
+          <span class="drawer-num">+</span>
+          <span class="drawer-icon">👨‍👩‍👧</span>
+          <span class="drawer-title">Famiglia, Finanze, Animali</span>
+          <span class="drawer-tag" style="color:var(--coral-dark); background:rgba(255,107,91,0.12);">premium</span>
+          <span class="drawer-toggle">+</span>
+        </div>
+        <div class="drawer-body">
+          <div class="drawer-body-inner">Con Premium aggiungi gruppi dedicati per tutta la famiglia, le scadenze finanziarie e i tuoi animali domestici — vaccini, sverminazioni e bolli compresi.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="come-funziona" style="background:var(--cream);">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-eyebrow">Come funziona</span>
+      <h2>Tre passi, zero pensieri</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Fotografa il documento</h3>
+        <p>Polizza, bolletta o documento d'identità: scatta una foto e RicordAI legge automaticamente la data che conta.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>RicordAI organizza tutto</h3>
+        <p>Ogni scadenza finisce nel cassetto giusto, pronta da consultare quando vuoi, in qualsiasi momento.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Ricevi l'avviso giusto in tempo</h3>
+        <p>Una notifica arriva con il margine di tempo utile per agire — non il giorno stesso, ma quando puoi ancora scegliere con calma.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="prezzi" class="pricing-bg">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-eyebrow" style="color:var(--sage);">Prezzi</span>
+      <h2>Gratis per iniziare, leggero per restare</h2>
+      <p class="section-desc">Le categorie principali sono gratuite per sempre. Premium aggiunge gruppi dedicati e spazio illimitato per le tue scadenze.</p>
+    </div>
+
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-name">Free</div>
+        <div class="price-amount">0€</div>
+        <div class="price-note">Per sempre</div>
+        <ul class="price-features">
+          <li>Macchina, Casa, Salute, Lavoro</li>
+          <li>Carte &amp; Documenti</li>
+          <li>Fino a 5 scadenze per categoria</li>
+          <li>Notifiche prima della scadenza</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <div class="price-name">Premium</div>
+        <div class="price-amount">2,99€<span>/mese</span></div>
+        <div class="price-note">oppure 29,99€/anno</div>
+        <ul class="price-features">
+          <li>Tutto di Free, senza limiti</li>
+          <li>Gruppi Famiglia, Finanze, Animali</li>
+          <li>Scadenze illimitate per categoria</li>
+          <li>Supporto prioritario</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="lingue">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom:36px;">
+      <span class="section-eyebrow">Disponibile in 9 lingue</span>
+      <h2>Parla la tua lingua, ovunque tu sia</h2>
+    </div>
+    <div class="lang-strip">
+      <span class="lang-pill">Italiano</span>
+      <span class="lang-pill">English</span>
+      <span class="lang-pill">Français</span>
+      <span class="lang-pill">Español</span>
+      <span class="lang-pill">Português</span>
+      <span class="lang-pill">Deutsch</span>
+      <span class="lang-pill">简体中文</span>
+      <span class="lang-pill">Русский</span>
+      <span class="lang-pill">日本語</span>
+    </div>
+  </div>
+</section>
+
+<section id="download" class="final-cta" style="background:var(--cream);">
+  <div class="wrap">
+    <span class="section-eyebrow">Inizia oggi</span>
+    <h2>La prossima scadenza dimenticata?<br>Non esisterà più.</h2>
+    <p class="section-desc">RicordAI è gratis per le categorie principali. Scaricala e fai la prima foto: il resto lo fa l'app.</p>
+    <div class="cta-row center">
+      <a href="#" class="btn-store" style="background:var(--navy); color:var(--cream);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.61.72 3.34 1.8-3.03 1.86-2.31 5.92.49 7.17-.7 1.74-1.34 2.83-2.48 4.04zM12.03 7.25c-.14-2.18 1.66-3.99 3.7-4.25.27 2.34-2.21 4.43-3.7 4.25z"/></svg>
+        App Store
+      </a>
+      <a href="#" class="btn-store" style="background:var(--navy); color:var(--cream);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3.6 2.18c-.35.2-.6.59-.6 1.02v17.6c0 .43.25.82.6 1.02l10.85-9.82L3.6 2.18zm12.15 9.82l2.5-2.27 3.6 2.06c.5.28.5 1 0 1.28l-3.6 2.06-2.5-2.27v-.86zm-1.3 1.18l-9.7 8.78 9.84-5.6 1.65-1.5-1.79-1.68zm0-2.36l1.79-1.68-1.65-1.5-9.84-5.6 9.7 8.78z"/></svg>
+        Google Play
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">RicordAI</div>
+        <div style="max-width:240px; opacity:0.7; font-size:13.5px; line-height:1.6;">L'app che ricorda le scadenze, così tu puoi pensare al resto.</div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-col-title">Prodotto</div>
+          <a href="#categorie">Categorie</a>
+          <a href="#come-funziona">Come funziona</a>
+          <a href="#prezzi">Prezzi</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Legale</div>
+          <a href="https://husky510rr.github.io/ricordai-privacy/">Privacy Policy</a>
+          <a href="mailto:support@ricordai.app">Supporto</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Contatti</div>
+          <a href="mailto:info@ricordai.app">info@ricordai.app</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 RicordAI. Tutti i diritti riservati.</span>
+      <span>Fatta con cura, in Italia.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.drawer-head').forEach(head => {
+    head.addEventListener('click', () => {
+      const drawer = head.parentElement;
+      const wasOpen = drawer.classList.contains('open');
+      document.querySelectorAll('.drawer').forEach(d => d.classList.remove('open'));
+      if (!wasOpen) drawer.classList.add('open');
+    });
+  });
+</script>
+
+</body>
+</html>
