@@ -923,6 +923,128 @@
     line-height: 1.6;
   }
 
+  /* ---------- CHARLOTTE SECTION ---------- */
+  .charlotte-bg {
+    background: var(--navy);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .charlotte-bg::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(127,179,155,0.15), transparent 70%);
+    pointer-events: none;
+  }
+
+  .charlotte-inner {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 56px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .charlotte-bg .section-eyebrow { color: var(--sage); }
+  .charlotte-bg h2 { color: var(--cream); }
+  .charlotte-bg .section-desc { color: rgba(247,244,238,0.7); }
+
+  .charlotte-orb {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(160deg, var(--sage), #5A8F76);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 32px;
+    box-shadow: 0 0 60px rgba(127,179,155,0.4);
+  }
+
+  .charlotte-wave {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .charlotte-wave span {
+    display: block;
+    width: 4px;
+    background: var(--cream);
+    border-radius: 2px;
+    animation: charlotte-pulse 1.2s ease-in-out infinite;
+  }
+
+  .charlotte-wave span:nth-child(1) { height: 14px; animation-delay: 0s; }
+  .charlotte-wave span:nth-child(2) { height: 28px; animation-delay: 0.15s; }
+  .charlotte-wave span:nth-child(3) { height: 40px; animation-delay: 0.3s; }
+  .charlotte-wave span:nth-child(4) { height: 22px; animation-delay: 0.45s; }
+  .charlotte-wave span:nth-child(5) { height: 32px; animation-delay: 0.6s; }
+  .charlotte-wave span:nth-child(6) { height: 16px; animation-delay: 0.75s; }
+
+  @keyframes charlotte-pulse {
+    0%, 100% { transform: scaleY(0.4); opacity: 0.6; }
+    50% { transform: scaleY(1); opacity: 1; }
+  }
+
+  .charlotte-visual-caption {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--sage);
+    letter-spacing: 0.03em;
+  }
+
+  .charlotte-features {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 36px;
+  }
+
+  .charlotte-feature {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .charlotte-feature-icon {
+    font-size: 22px;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: rgba(247,244,238,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .charlotte-feature h3 {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+
+  .charlotte-feature p {
+    font-size: 14px;
+    color: rgba(247,244,238,0.65);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 860px) {
+    .charlotte-inner { grid-template-columns: 1fr; gap: 40px; }
+  }
+
   /* ---------- SCREENSHOT GALLERY ---------- */
   .gallery-bg {
     background: var(--navy);
@@ -1048,6 +1170,7 @@
     <a href="#top" class="logo"><img src="images/icon-app.png" alt="RicordAI"></a>
     <div class="nav-links">
       <a href="#ai">Come legge l'AI</a>
+      <a href="#charlotte">Charlotte</a>
       <a href="#screenshot">Screenshot</a>
       <a href="#categorie">Cosa ricorda</a>
       <a href="#come-funziona">Come funziona</a>
@@ -1115,6 +1238,8 @@
 <div class="trust-strip">
   <div class="wrap trust-inner">
     <span>9 lingue supportate</span>
+    <span>·</span>
+    <span>Assistente vocale Charlotte</span>
     <span>·</span>
     <span>Notifiche prima della scadenza</span>
     <span>·</span>
@@ -1208,6 +1333,49 @@
   </div>
 </section>
 
+<section id="charlotte" class="charlotte-bg">
+  <div class="wrap charlotte-inner">
+    <div>
+      <div class="charlotte-orb">
+        <div class="charlotte-wave">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <p class="charlotte-visual-caption">Charlotte ti dà il benvenuto</p>
+    </div>
+
+    <div>
+      <span class="section-eyebrow">La tua assistente vocale</span>
+      <h2>Non solo notifiche. Una voce che ti accoglie.</h2>
+      <p class="section-desc">Al primo avvio, Charlotte ti dà il benvenuto e ti spiega come RicordAI lavorerà per te. Non è una semplice registrazione: è il tocco che rende l'app davvero tua, in 9 lingue.</p>
+
+      <div class="charlotte-features">
+        <div class="charlotte-feature">
+          <div class="charlotte-feature-icon">🎙️</div>
+          <div>
+            <h3>Un benvenuto su misura</h3>
+            <p>Charlotte ti accoglie al primo avvio con una voce calda, in italiano o in una delle altre 8 lingue supportate.</p>
+          </div>
+        </div>
+        <div class="charlotte-feature">
+          <div class="charlotte-feature-icon">☀️</div>
+          <div>
+            <h3>Il riepilogo del mattino</h3>
+            <p>Attiva la notifica mattutina: ogni giorno alle 8:00 sai già quali scadenze ti aspettano.</p>
+          </div>
+        </div>
+        <div class="charlotte-feature">
+          <div class="charlotte-feature-icon">💬</div>
+          <div>
+            <h3>La tua voce, ascoltata</h3>
+            <p>Suggerisci una funzione o segnala un problema direttamente dall'app: il team legge ogni messaggio.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="screenshot" class="gallery-bg">
   <div class="wrap">
     <div class="section-head">
@@ -1255,7 +1423,7 @@
   <div class="wrap">
     <div class="section-head">
       <span class="section-eyebrow">Cosa ricorda per te</span>
-      <h2>Cinque cassetti, una sola app</h2>
+      <h2>Otto cassetti, una sola app</h2>
       <p class="section-desc">RicordAI organizza la tua vita in categorie chiare. Apri il cassetto giusto e trovi solo quello che ti serve sapere, quando ti serve saperlo.</p>
     </div>
 
@@ -1325,9 +1493,35 @@
         </div>
       </div>
 
+     <div class="drawer">
+        <div class="drawer-head">
+          <span class="drawer-num">06</span>
+          <span class="drawer-icon">💳</span>
+          <span class="drawer-title">Abbonamenti</span>
+          <span class="drawer-tag" style="color:var(--coral-dark); background:rgba(255,107,91,0.12);">premium</span>
+          <span class="drawer-toggle">+</span>
+        </div>
+        <div class="drawer-body">
+          <div class="drawer-body-inner">Streaming, palestra, software. RicordAI calcola da solo il totale mensile che spendi in abbonamenti, così sai sempre dove va il tuo denaro.</div>
+        </div>
+      </div>
+
       <div class="drawer">
         <div class="drawer-head">
-          <span class="drawer-num">+</span>
+          <span class="drawer-num">07</span>
+          <span class="drawer-icon">💊</span>
+          <span class="drawer-title">Medicine</span>
+          <span class="drawer-tag" style="color:var(--coral-dark); background:rgba(255,107,91,0.12);">premium</span>
+          <span class="drawer-toggle">+</span>
+        </div>
+        <div class="drawer-body">
+          <div class="drawer-body-inner">Dosaggio e frequenza di ogni terapia. RicordAI ti avvisa ad ogni assunzione, così non salti mai una dose.</div>
+        </div>
+      </div>
+
+      <div class="drawer">
+        <div class="drawer-head">
+          <span class="drawer-num">08</span>
           <span class="drawer-icon">👨‍👩‍👧</span>
           <span class="drawer-title">Famiglia, Finanze, Animali</span>
           <span class="drawer-tag" style="color:var(--coral-dark); background:rgba(255,107,91,0.12);">premium</span>
@@ -1394,7 +1588,7 @@
         <div class="price-note">oppure 29,99€/anno</div>
         <ul class="price-features">
           <li>Tutto di Free, senza limiti</li>
-          <li>Gruppi Famiglia, Finanze, Animali</li>
+          <li>Gruppi Famiglia, Finanze, Animali, Abbonamenti, Medicine</li>
           <li>Scadenze illimitate per categoria</li>
           <li>Supporto prioritario</li>
         </ul>
